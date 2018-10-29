@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="homeLogo" format="integer" type="id"/>
+    <item name="awayLogo" format="integer" type="id"/>
+    <item name="homeTeam" format="integer" type="id"/>
+    <item name="awayTeam" format="integer" type="id"/>
+    <item name="score" format="integer" type="id"/>
+    <item name="date" format="integer" type="id"/>
+    <item name="lineup" format="integer" type="id"/>
+</resources>
