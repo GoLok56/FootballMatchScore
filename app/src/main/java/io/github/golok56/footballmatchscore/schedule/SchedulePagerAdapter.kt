@@ -1,14 +1,9 @@
 package io.github.golok56.footballmatchscore.schedule
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import io.github.golok56.footballmatchscore.schedule.last.LastMatchFragment
-import io.github.golok56.footballmatchscore.schedule.next.NextMatchFragment
-
-class SchedulePagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SchedulePagerAdapter(fm: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentStatePagerAdapter(fm) {
     override fun getItem(pos: Int) = when(pos) {
-        0 -> LastMatchFragment()
-        else -> NextMatchFragment()
+        0 -> SchedulePreviousFragment()
+        else -> ScheduleUpcomingFragment()
     }
     override fun getCount() = 2
     override fun getPageTitle(position: Int) = when(position) {

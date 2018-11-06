@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_small">50dp</dimen>
+    <dimen name="image_large">100dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_standard">8dp</dimen>
+    <dimen name="activity_main_toolbar_size">18sp</dimen>
+    <dimen name="label_team_name">14sp</dimen>
+    <dimen name="label_schedule_date">16sp</dimen>
+    <dimen name="label_error">18sp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="image_very_small">25dp</dimen>
+</resources>

@@ -1,16 +1,19 @@
 package io.github.golok56.footballmatchscore.schedule
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.github.golok56.footballmatchscore.model.Schedule
 import io.github.golok56.footballmatchscore.usecase.FindAllLastMatches
 import io.github.golok56.footballmatchscore.usecase.FindAllNextMatches
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import io.github.golok56.footballmatchscore.usecase.FindFavoriteMatches
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
     private val findAllNextMatches: FindAllNextMatches,
     private val findAllLastMatches: FindAllLastMatches,
+    private val findFavoriteMatches: FindFavoriteMatches,
     private val leagueId: String
 ) : ViewModel() {
     val viewState = MutableLiveData<ScheduleViewState>()
@@ -27,7 +30,7 @@ class ScheduleViewModel(
         }
         viewState.value = scheduleViewState
 
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             var error: String? = null
             var schedules: MutableList<Schedule>? = null
 
@@ -53,12 +56,38 @@ class ScheduleViewModel(
         }
         viewState.value = scheduleViewState
 
-        launch(UI) {
+        GlobalScope.launch(Dispatchers.Main) {
             var error: String? = null
             var schedules: MutableList<Schedule>? = null
 
             try {
                 schedules = findAllLastMatches.execute(leagueId)
+            } catch (ex: Exception) {
+                error = ex.message
+            }
+
+            viewState.value = scheduleViewState?.apply {
+                loading = false
+                data[LAST] = schedules
+                this.error = error
+            }
+        }
+    }
+
+    fun fetchFavoriteMatches() {
+        val scheduleViewState = viewState.value?.apply {
+            loading = true
+            data[LAST] = null
+            error = null
+        }
+        viewState.value = scheduleViewState
+
+        GlobalScope.launch(Dispatchers.Main) {
+            var error: String? = null
+            var schedules: MutableList<Schedule>? = null
+
+            try {
+                schedules = findFavoriteMatches.execute(true)
             } catch (ex: Exception) {
                 error = ex.message
             }

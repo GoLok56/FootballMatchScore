@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Football Match Score</string>
+    <string name="label_search_favorite_league">Cari liga favoritmu</string>
+    <string name="content_description_league_logo">Logo liga</string>
+    <string name="menu_search">Search</string>
+    <string name="label_choose_league">Pilih Liga</string>
+    <string name="label_versus">%s vs %s</string>
+    <string name="content_description_team_logo">Logo tim</string>
+    <string name="label_vs">VS</string>
+    <string name="label_home">Home</string>
+    <string name="label_away">Away</string>
+    <string name="label_gk">GK</string>
+    <string name="label_df">DF</string>
+    <string name="label_mf">MF</string>
+    <string name="label_fw">FW</string>
+    <string name="label_sub">Sub</string>
 </resources>

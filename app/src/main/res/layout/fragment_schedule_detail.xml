@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_large">
+
+    <TextView
+        android:id="@+id/tvScheduleDetailGkLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_gk"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvScheduleDetailGk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailSub"
+        app:layout_constraintTop_toTopOf="@id/tvScheduleDetailGkLabel"
+        tools:text="Stephen Curry" />
+
+
+    <TextView
+        android:id="@+id/tvScheduleDetailDfLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:text="@string/label_df"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailGkLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvScheduleDetailGk" />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailDf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailSub"
+        app:layout_constraintTop_toTopOf="@id/tvScheduleDetailDfLabel"
+        tools:text="Kevin Durant; Draymond Green; " />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailMfLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:text="@string/label_mf"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailGkLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvScheduleDetailDf" />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailMf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailSub"
+        app:layout_constraintTop_toTopOf="@id/tvScheduleDetailMfLabel"
+        tools:text="Demarcus Cousin; James Harden; Lebron James; " />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailFwLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:text="@string/label_fw"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailGkLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvScheduleDetailMf" />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailFw"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailSub"
+        app:layout_constraintTop_toTopOf="@id/tvScheduleDetailFwLabel"
+        tools:text="Chris Paul; " />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailSubLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:text="@string/label_sub"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvScheduleDetailGkLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvScheduleDetailFw" />
+
+    <TextView
+        android:id="@+id/tvScheduleDetailSub"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_standard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvScheduleDetailSubLabel"
+        app:layout_constraintTop_toTopOf="@id/tvScheduleDetailSubLabel"
+        tools:text="Trevor Ariza; Javale McGee; " />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

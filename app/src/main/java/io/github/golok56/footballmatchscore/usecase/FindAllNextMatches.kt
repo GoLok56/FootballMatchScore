@@ -1,17 +1,17 @@
 package io.github.golok56.footballmatchscore.usecase
 
 import io.github.golok56.footballmatchscore.model.Schedule
-import io.github.golok56.footballmatchscore.repository.ScheduleRepository
+import io.github.golok56.footballmatchscore.repository.NextScheduleRepository
 
 class FindAllNextMatches(
-    private val scheduleRepository: ScheduleRepository
+    private val scheduleRepository: NextScheduleRepository
 ) : UseCase<String, MutableList<Schedule>>() {
     override suspend fun execute(data: String): MutableList<Schedule>? {
         val response = scheduleRepository.findAllNextMatches(data).await()
 
         if (response.isSuccessful) {
             val scheduleResponse = response.body()?.events
-            scheduleRepository.nextMatches[data] = scheduleResponse
+            scheduleResponse?.let { scheduleRepository.save(it) }
             return scheduleResponse
         }
 
