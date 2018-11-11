@@ -2,7 +2,6 @@ package io.github.golok56.footballmatchscore.repository
 
 import io.github.golok56.footballmatchscore.model.Schedule
 import io.github.golok56.footballmatchscore.sqliteservice.DatabaseHelper
-import kotlinx.coroutines.Deferred
 import org.jetbrains.anko.db.*
 
 class FavoriteRepository private constructor(private val db: DatabaseHelper) :

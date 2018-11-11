@@ -77,7 +77,7 @@ class ScheduleViewModel(
     fun fetchFavoriteMatches() {
         val scheduleViewState = viewState.value?.apply {
             loading = true
-            data[LAST] = null
+            data[FAVS] = null
             error = null
         }
         viewState.value = scheduleViewState
@@ -94,7 +94,7 @@ class ScheduleViewModel(
 
             viewState.value = scheduleViewState?.apply {
                 loading = false
-                data[LAST] = schedules
+                data[FAVS] = schedules
                 this.error = error
             }
         }
@@ -103,5 +103,6 @@ class ScheduleViewModel(
     companion object {
         const val NEXT = "nextMatches"
         const val LAST = "lastMatches"
+        const val FAVS = "favoriteMatches"
     }
 }

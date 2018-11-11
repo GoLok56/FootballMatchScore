@@ -2,6 +2,7 @@ package io.github.golok56.footballmatchscore.schedule
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -62,8 +63,16 @@ class ScheduleActivity : AppCompatActivity() {
 
     private fun handleState(viewState: ScheduleViewState?) {
         handleLoading(viewState?.loading)
-        handleData(viewState?.data?.get(ScheduleViewModel.LAST))
+        handleData(viewState?.data?.get(ScheduleViewModel.FAVS))
         handleError(viewState?.error)
+
+        if (viewState?.data?.get(ScheduleViewModel.FAVS) != null &&
+            (viewState.data.get(ScheduleViewModel.FAVS) as MutableList).isEmpty() &&
+            !viewState.loading && viewState.error == null
+        ) {
+            Log.i("Asas", "askalskla")
+            handleError("Belum ditemukan pertandingan favorit")
+        }
     }
 
     private fun handleLoading(loading: Boolean?) {
