@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_large">
+
+        <ImageView
+            android:id="@+id/ivTeamLogo"
+            android:layout_width="@dimen/image_small"
+            android:layout_height="@dimen/image_small"
+            android:contentDescription="@string/content_description_league_logo"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_standard"
+            tools:text="@tools:sample/full_names" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

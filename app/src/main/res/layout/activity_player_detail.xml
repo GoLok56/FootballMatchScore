@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivPlayerDetailBanner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/ivPlayerDetailAvatar"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@id/ivPlayerDetailBanner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPlayerDetailBanner"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPlayerDetailAvatar"
+            tools:text="Stephen Curry" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailPos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayerDetailName"
+            tools:text="Midfield" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailHeightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/label_height"
+            app:layout_constraintEnd_toStartOf="@id/tvPlayerDetailWeightLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayerDetailPos" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailWeightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_weight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPlayerDetailHeightLabel"
+            app:layout_constraintTop_toTopOf="@id/tvPlayerDetailHeightLabel" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@id/tvPlayerDetailHeightLabel"
+            app:layout_constraintStart_toStartOf="@id/tvPlayerDetailHeightLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayerDetailHeightLabel"
+            tools:text="1.68" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="@id/tvPlayerDetailWeightLabel"
+            app:layout_constraintStart_toStartOf="@id/tvPlayerDetailWeightLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayerDetailWeightLabel"
+            tools:text="65.76" />
+
+        <TextView
+            android:id="@+id/tvPlayerDetailDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_standard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayerDetailHeight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -2,14 +2,14 @@ package io.github.golok56.footballmatchscore.schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.github.golok56.footballmatchscore.usecase.FindAllLastMatches
-import io.github.golok56.footballmatchscore.usecase.FindAllNextMatches
-import io.github.golok56.footballmatchscore.usecase.FindFavoriteMatches
+import io.github.golok56.domain.usecase.FindAllFavoriteMatches
+import io.github.golok56.domain.usecase.FindAllPreviousMatches
+import io.github.golok56.domain.usecase.FindAllUpcomingMatches
 
 class ScheduleViewModelFactory(
-    private val findAllNextMatches: FindAllNextMatches,
-    private val findAllLastMatches: FindAllLastMatches,
-    private val findFavoriteMatches: FindFavoriteMatches,
+    private val findAllNextMatches: FindAllUpcomingMatches,
+    private val findAllLastMatches: FindAllPreviousMatches,
+    private val findFavoriteMatches: FindAllFavoriteMatches,
     private val leagueId: String
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")

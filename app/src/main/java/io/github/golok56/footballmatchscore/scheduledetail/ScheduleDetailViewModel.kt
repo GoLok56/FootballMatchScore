@@ -2,11 +2,11 @@ package io.github.golok56.footballmatchscore.scheduledetail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.github.golok56.domain.usecase.*
+import io.github.golok56.footballmatchscore.mapper.LeagueEntityToModelMapper
+import io.github.golok56.footballmatchscore.mapper.ScheduleModelToEntityMapper
+import io.github.golok56.footballmatchscore.mapper.TeamEntityToModelMapper
 import io.github.golok56.footballmatchscore.model.Schedule
-import io.github.golok56.footballmatchscore.usecase.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class ScheduleDetailViewModel(
     private val findTeam: FindTeam,
@@ -15,6 +15,10 @@ class ScheduleDetailViewModel(
     private val removeFavorite: RemoveFavorite,
     private val addFavorite: AddFavorite
 ) : ViewModel() {
+    private var scheduleModelToEntityMapper = ScheduleModelToEntityMapper()
+    private var teamEntityToModelMapper = TeamEntityToModelMapper()
+    private var leagueEntityToModelMapper = LeagueEntityToModelMapper()
+
     val viewState = MutableLiveData<ScheduleDetailViewState>()
 
     init {
@@ -22,59 +26,46 @@ class ScheduleDetailViewModel(
     }
 
     fun find(teamId: String, side: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                viewState.value = viewState.value?.apply {
-                    data[side] = findTeam.execute(teamId)
-                    error = null
-                }
-            } catch (ex: Exception) {
-                viewState.value = viewState.value?.apply {
-                    error = ex.message
-                    data[side] = null
-                }
+        findTeam.execute(teamId) { result, err ->
+            viewState.value = viewState.value?.apply {
+                data[side] = result?.let { teamEntityToModelMapper.map(it) }
+                error = err?.message
             }
         }
     }
 
     fun getLeague(leagueId: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                viewState.value = viewState.value?.apply {
-                    data[LEAGUE] = findLeagueDetail.execute(leagueId)
-                    error = null
-                }
-            } catch(ex: Exception) {
-                viewState.value = viewState.value?.apply {
-                    data[LEAGUE] = null
-                    error = ex.message
-                }
+        findLeagueDetail.execute(leagueId) { result, err ->
+            viewState.value = viewState.value?.apply {
+                data[LEAGUE] = result?.let { leagueEntityToModelMapper.map(it) }
+                error = err?.message
             }
         }
     }
 
     fun isFavorite(scheduleId: String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        checkFavorite.execute(scheduleId) { result, err ->
             viewState.value = viewState.value?.apply {
-                data[FAVORITE] = checkFavorite.execute(scheduleId)
+                data[FAVORITE] = result
+                error = err?.message
             }
         }
     }
 
     fun removeFavorite(schedule: Schedule) {
-        GlobalScope.launch(Dispatchers.Main) {
-            removeFavorite.execute(schedule)
+        removeFavorite.execute(scheduleModelToEntityMapper.map(schedule)) { _, err ->
             viewState.value = viewState.value?.apply {
                 data[FAVORITE] = false
+                error = err?.message
             }
         }
     }
 
     fun addFavorite(schedule: Schedule) {
-        GlobalScope.launch(Dispatchers.Main) {
-            addFavorite.execute(schedule)
+        addFavorite.execute(scheduleModelToEntityMapper.map(schedule)) { _, err ->
             viewState.value = viewState.value?.apply {
                 data[FAVORITE] = true
+                error = err?.message
             }
         }
     }

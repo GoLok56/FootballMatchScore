@@ -2,8 +2,7 @@ package io.github.golok56.footballmatchscore.scheduledetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.github.golok56.footballmatchscore.usecase.*
-import java.lang.IllegalArgumentException
+import io.github.golok56.domain.usecase.*
 
 class ScheduleDetailViewModelFactory(
     private val findTeam: FindTeam,

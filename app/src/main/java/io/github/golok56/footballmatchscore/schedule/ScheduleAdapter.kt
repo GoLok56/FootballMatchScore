@@ -3,6 +3,7 @@ package io.github.golok56.footballmatchscore.schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.github.golok56.footballmatchscore.R
 import io.github.golok56.footballmatchscore.base.BaseViewHolder
 import io.github.golok56.footballmatchscore.model.Schedule
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.item_schedule_date.view.*
 import kotlinx.android.synthetic.main.item_schedule_event.view.*
 import org.jetbrains.anko.startActivity
 
-class ScheduleAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseViewHolder<*>>() {
+class ScheduleAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private val items = mutableListOf<Any>()
 
     override fun getItemViewType(position: Int) = when (items[position]) {

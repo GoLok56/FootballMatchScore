@@ -14,4 +14,22 @@
     <string name="label_mf">MF</string>
     <string name="label_fw">FW</string>
     <string name="label_sub">Sub</string>
+    <string name="label_add_reminder">+ Tambah ke kalender</string>
+    <string name="label_schedule">Jadwal</string>
+    <string name="label_tim">Tim</string>
+    <string name="label_about">Pengembang</string>
+    <string name="developer_name">Satria Adi Putra</string>
+    <string name="author_jobdesk">Android Developers @ UNIKOM CodeLabs</string>
+    <string name="label_find">Find Me On</string>
+    <string name="label_find_more">Find More</string>
+
+    <string name="url_instagram">https://instagram.com/satadii11</string>
+    <string name="url_linked_in">https://www.linkedin.com/in/satria-adi-putra-853306156/</string>
+    <string name="url_github">https://github.com/golok56</string>
+    <string name="url_github_pages">https://golok56.github.io</string>
+    <string name="label_since">Since %s</string>
+    <string name="label_overview">Overview</string>
+    <string name="label_players">Players</string>
+    <string name="label_height">Height (m)</string>
+    <string name="label_weight">Weight (kg)</string>
 </resources>

@@ -1,18 +1,16 @@
 package io.github.golok56.footballmatchscore.model
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Team(
-    @SerializedName("idTeam") val id: String?,
-    @SerializedName("strTeamBadge") val logo: String?,
-    @SerializedName("strTeam") val name: String?,
+    val id: String?,
+    val logo: String?,
+    val name: String?,
+    val formedYear: String?,
+    val stadium: String?,
+    val description: String?,
+    val leagueId: String?,
     var updatedOn: Long? = null
-) {
-    companion object {
-        const val TABLE_TEAM = "team"
-        const val COLUMN_ID = "id"
-        const val COLUMN_LOGO = "logo"
-        const val COLUMN_NAME = "name"
-        const val COLUMN_UPDATED_ON = "updated_on"
-    }
-}
+) : Parcelable

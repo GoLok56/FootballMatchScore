@@ -21,7 +21,7 @@ class MainActivityTest {
     var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun testAppBehavior() {
+    fun testScheduleFavorite() {
         onView(withId(rvMainLeagues)).check(matches(isDisplayed()))
         onView(withText("Favorites")).check(matches(isDisplayed()))
         onView(withText("Favorites")).perform(click())
@@ -46,5 +46,33 @@ class MainActivityTest {
         onView(withText("Perth Glory")).check(matches(isDisplayed()))
         onView(withText("Perth Glory")).perform(click())
         onView(withId(fabScheduleDetail)).perform(click())
+    }
+
+    @Test
+    fun testTeamFavorite() {
+        onView(withId(rvMainLeagues)).check(matches(isDisplayed()))
+        onView(withText("Favorites")).check(matches(isDisplayed()))
+        onView(withText("Favorites")).perform(click())
+        onView(withId(menu_bnv_team)).perform(click())
+        onView(withText("Belum ditemukan tim favorit")).check(matches(isDisplayed()))
+        pressBack()
+
+        onView(withText("Australian A-League")).perform(click())
+        onView(withId(menu_bnv_team)).perform(click())
+
+        onView(withText("Melbourne Victory")).check(matches(isDisplayed()))
+        onView(withText("Melbourne Victory")).perform(click())
+        onView(withId(ivTeamDetailAddFavs)).check(matches(isDisplayed()))
+        onView(withId(ivTeamDetailAddFavs)).perform(click())
+
+        pressBack()
+        pressBack()
+
+        onView(withText("Favorites")).perform(click())
+        onView(withId(menu_bnv_team)).perform(click())
+        onView(withText("Melbourne Victory")).check(matches(isDisplayed()))
+        onView(withText("Melbourne Victory")).perform(click())
+        onView(withId(ivTeamDetailAddFavs)).check(matches(isDisplayed()))
+        onView(withId(ivTeamDetailAddFavs)).perform(click())
     }
 }

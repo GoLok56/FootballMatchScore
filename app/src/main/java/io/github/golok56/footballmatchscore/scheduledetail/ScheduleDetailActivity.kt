@@ -1,25 +1,31 @@
 package io.github.golok56.footballmatchscore.scheduledetail
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import io.github.golok56.footballmatchscore.R
+import io.github.golok56.footballmatchscore.base.BaseApplication
+import io.github.golok56.footballmatchscore.base.load
 import io.github.golok56.footballmatchscore.model.League
 import io.github.golok56.footballmatchscore.model.Schedule
 import io.github.golok56.footballmatchscore.model.Team
-import io.github.golok56.footballmatchscore.repository.FavoriteRepository
-import io.github.golok56.footballmatchscore.repository.LeagueRepository
-import io.github.golok56.footballmatchscore.repository.TeamRepository
-import io.github.golok56.footballmatchscore.sqliteservice.getDatabase
-import io.github.golok56.footballmatchscore.usecase.*
+import io.github.golok56.footballmatchscore.scheduledetail.ScheduleDetailFragment.Companion.AWAY
+import io.github.golok56.footballmatchscore.scheduledetail.ScheduleDetailFragment.Companion.HOME
+import io.github.golok56.footballmatchscore.scheduledetail.ScheduleDetailFragment.Companion.newInstance
 import kotlinx.android.synthetic.main.activity_schedule_detail.*
 import org.jetbrains.anko.toast
+import java.util.*
+import javax.inject.Inject
 
 class ScheduleDetailActivity : AppCompatActivity() {
+    @Inject
+    lateinit var factory: ScheduleDetailViewModelFactory
+
     private lateinit var vm: ScheduleDetailViewModel
     private lateinit var schedule: Schedule
 
@@ -28,18 +34,10 @@ class ScheduleDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule_detail)
+        (application as BaseApplication).createScheduleDetailComponent().inject(this)
 
         schedule = intent.getParcelableExtra(EXTRA_SCHEDULE)
 
-        val db = getDatabase()
-        val favoriteRepository = FavoriteRepository.getInstance(db)
-        val factory = ScheduleDetailViewModelFactory(
-            FindTeam(TeamRepository.getInstance(db)),
-            FindLeagueDetail(LeagueRepository.getInstance(db)),
-            CheckFavorite(favoriteRepository),
-            RemoveFavorite(favoriteRepository),
-            AddFavorite(favoriteRepository)
-        )
         vm = ViewModelProviders.of(this, factory)
             .get(ScheduleDetailViewModel::class.java)
             .apply {
@@ -49,10 +47,15 @@ class ScheduleDetailActivity : AppCompatActivity() {
                 schedule.id?.let { isFavorite(it) }
                 viewState.observe(this@ScheduleDetailActivity, Observer { handleState(it) })
             }
-        initView(schedule)
+        initView()
     }
 
-    private fun initView(schedule: Schedule) {
+    override fun onDestroy() {
+        super.onDestroy()
+        (application as BaseApplication).releaseScheduleDetailComponent()
+    }
+
+    private fun initView() {
         tvScheduleDetailDate.text = schedule.date
         tvScheduleDetailHome.text = schedule.homeTeam
         tvScheduleDetailAway.text = schedule.awayTeam
@@ -68,25 +71,16 @@ class ScheduleDetailActivity : AppCompatActivity() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                var fragment = Fragment()
                 if (tab?.position == 0) {
-                    val fragment = ScheduleDetailFragment.newInstance(
-                        schedule,
-                        ScheduleDetailFragment.HOME
-                    )
-                    replaceFragment(fragment)
+                    fragment = newInstance(schedule, HOME)
                 } else if (tab?.position == 1) {
-                    val fragment = ScheduleDetailFragment.newInstance(
-                        schedule,
-                        ScheduleDetailFragment.AWAY
-                    )
-                    replaceFragment(fragment)
+                    fragment = newInstance(schedule, AWAY)
                 }
+                replaceFragment(fragment)
             }
         })
-        val fragment = ScheduleDetailFragment.newInstance(
-            schedule,
-            ScheduleDetailFragment.HOME
-        )
+        val fragment = newInstance(schedule, HOME)
         replaceFragment(fragment)
 
         fabScheduleDetail.setOnClickListener {
@@ -96,45 +90,35 @@ class ScheduleDetailActivity : AppCompatActivity() {
                 vm.addFavorite(schedule)
             }
         }
+
+        tvscheduleDetailAddReminder.setOnClickListener { addReminder() }
     }
 
     private fun handleState(viewState: ScheduleDetailViewState?) {
         handleData(viewState?.data)
-        handleError(viewState?.error)
+        viewState?.error?.let { toast(it) }
     }
 
     private fun handleData(data: MutableMap<String, Any?>?) {
         data?.let {
             it[ScheduleDetailViewModel.HOME]?.let { home ->
-                if (home is Team) {
-                    Glide.with(this@ScheduleDetailActivity)
-                        .load(home.logo)
-                        .into(ivScheduleDetailHome)
-                }
+                if (home is Team) home.logo?.let { logo -> ivScheduleDetailHome.load(logo) }
             }
 
             it[ScheduleDetailViewModel.AWAY]?.let { away ->
-                if (away is Team) {
-                    Glide.with(this@ScheduleDetailActivity)
-                        .load(away.logo)
-                        .into(ivScheduleDetailAway)
-                }
+                if (away is Team) away.logo?.let { logo -> ivScheduleDetailAway.load(logo) }
             }
 
             it[ScheduleDetailViewModel.LEAGUE]?.let { league ->
-                if (league is League) {
-                    Glide.with(this@ScheduleDetailActivity)
-                        .load(league.logo)
-                        .into(ivScheduleDetailLeagueLogo)
-                }
+                if (league is League) league.logo?.let { logo -> ivScheduleDetailLeagueLogo.load(logo) }
             }
 
             it[ScheduleDetailViewModel.FAVORITE]?.let { isFavorite ->
                 if (isFavorite is Boolean) {
                     if (isFavorite) {
-                        fabScheduleDetail.setImageResource(R.drawable.ic_star_black_24dp)
+                        fabScheduleDetail.setImageResource(R.drawable.ic_star_white_24dp)
                     } else {
-                        fabScheduleDetail.setImageResource(R.drawable.ic_star_border_black_24dp)
+                        fabScheduleDetail.setImageResource(R.drawable.ic_star_border_white_24dp)
                     }
 
                     this.isFavorite = isFavorite
@@ -143,14 +127,34 @@ class ScheduleDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleError(error: String?) {
-        error?.let { toast(it) }
-    }
-
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.flScheduleDetail, fragment)
             .commit()
+    }
+
+    private fun addReminder() {
+        schedule.date?.let {
+            val times = it.split("/").map { num -> num.toInt() }
+            val beginTime = Calendar.getInstance().run {
+                set(2000 + times[2], times[1], times[0])
+                timeInMillis
+            }
+            val intent = Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+                .putExtra(CalendarContract.Events.TITLE, "${schedule.homeTeam} vs ${schedule.awayTeam}")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Nonton ${schedule.homeTeam} lawan ${schedule.awayTeam}")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "Di rumah")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_TENTATIVE)
+
+            startActivity(intent)
+        }
+
+        if (schedule.date == null) {
+            toast("Tanggal mainnya tidak diketahui")
+        }
     }
 
     companion object {

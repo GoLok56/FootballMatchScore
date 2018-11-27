@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="@id/tvScheduleDetailGkLabel"
         tools:text="Stephen Curry" />
 
-
     <TextView
         android:id="@+id/tvScheduleDetailDfLabel"
         android:layout_width="wrap_content"

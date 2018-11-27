@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_bnv_schedule"
+        android:icon="@drawable/ic_schedule_black_24dp"
+        android:title="@string/label_schedule" />
+
+    <item
+        android:id="@+id/menu_bnv_team"
+        android:icon="@drawable/team"
+        android:title="@string/label_tim" />
+
+    <item
+        android:id="@+id/menu_bnv_about"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/label_about" />
+</menu>
